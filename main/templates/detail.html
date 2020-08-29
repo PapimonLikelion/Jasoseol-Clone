@@ -1,0 +1,34 @@
+{{my_jss.id}}
+<br>
+제목: {{my_jss.title}}
+<br>
+내용: {{my_jss.content}}
+<br>
+생성시간: {{my_jss.updated_at|date:"Y-m-d"}}
+<br>
+{% if my_jss.author == user %}
+<a href="{% url 'update' my_jss.id %}"><button>수정</button></a>
+<a href="{% url 'delete' my_jss.id %}"><button>삭제</button></a>
+{% endif %}
+
+{% if user.is_authenticated %}
+<!-- action을 안써두면 views.py detail 실행한다... 지금 보고있는게 detail페이지거든 -->
+<form action="{% url 'create_comment' my_jss.id %}" method="POST">
+    {% csrf_token %}
+    {{comment_form}}
+    <input type="submit" value="확인">
+</form>
+{% endif %}
+
+{% for comment in my_jss.comment_set.all %}
+    <h5>{{comment.author}}</h5>
+    {{comment.content}}
+    {% if comment.author == user %}
+    <a href="{% url 'delete_comment' comment.id %}">
+        <button>
+            댓글 삭제하기
+        </button>
+    </a>
+    {% endif %}
+
+{% endfor %}

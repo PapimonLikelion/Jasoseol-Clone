@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자소설 닷컴</title>
+</head>
+<body>
+    <form method="POST" action="">
+   
+        {% csrf_token %}
+        {{ jss_form.as_p }}
+        <input type="submit" value="확인">
+    
+    </form>
+    <h5>글자수</h5>
+    <h5 class="wordcount"></h5>
+    <script src="{% static 'js/count.js' %}"></script>
+    <script>
+        var seoul = document.getElementsByClassName("jss_location_si")
+        console.log(seoul)
+    </script>
+</body>
+</html>
